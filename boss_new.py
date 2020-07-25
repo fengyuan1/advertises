@@ -5,11 +5,12 @@ Created on Tue Jul 23 17:12:30 2019
 @author: Administrator
 """
 
-import urllib.request
+# import urllib.request
 import urllib.parse
 import re
 import csv
 import time
+from urllib import request
 
 #https://www.zhipin.com/c101130100/d_203/?query=Java&page=1&ka=page-1
 
@@ -22,20 +23,35 @@ class ZhaopinSpyder:
         #self.page = 0
     # 获取页面
     def getPage(self,url):
-        req = urllib.request.Request(url,headers=self.headers)
-        res = urllib.request.urlopen(req)
-        html = res.read().decode("utf-8")
+        # print(self.headers)
+        head = request.Request(url, headers=self.headers)
+        # print(head)
+        response = request.urlopen(head)
+        print(response.getheaders())
+        cookie = ''
+        for header in response.getheaders():
+            if header[0] == 'set-cookie':
+                cookie = cookie + header[1].split(';')[0] + '; '
+        # 去掉最后的空格
+        cookie = cookie[:-1]
+        print(cookie)
+
+
+        # req = urllib.request.Request(url,headers=self.headers)
+        # res = urllib.request.urlopen(req)
+        # html = res.read().decode("utf-8")
         #print(html)
-        print(html)
-        self.parsePage(html)      
+        # print(html)
+        # self.parsePage(html)
     # 解析页面
     def parsePage(self, html):
-        p = re.compile(r'<div class="job-primary">.*?<div class="job-title">(.*?)</div>.*?<span class="red">(.*?)</span>.*?<em class="vline"></em>(.*?)<em class="vline">.*?<h3 class="name">.*?target="_blank">(.*?)</a></h3>.*?',re.S)
-        rList = p.findall(html)
-        print(rList)
-        if bool(rList):
-            #print(rList)
-            self.writePage(rList)
+        print(1)
+        # p = re.compile(r'<div class="job-primary">.*?<div class="job-title">(.*?)</div>.*?<span class="red">(.*?)</span>.*?<em class="vline"></em>(.*?)<em class="vline">.*?<h3 class="name">.*?target="_blank">(.*?)</a></h3>.*?',re.S)
+        # rList = p.findall(html)
+        # print(rList)
+        # if bool(rList):
+        #     #print(rList)
+        #     self.writePage(rList)
         
     # 保存数据
     def writePage(self,List):
@@ -64,7 +80,6 @@ class ZhaopinSpyder:
         for i in range(1,4):
             url = self.baseurl+city+"/d_203/?"+query+"&page%s&ka=page-%s"%(str(i),str(i))
             print("爬取第%d页"%(i))
-            print(url)
             self.getPage(url)
             time.sleep(0.5)
         print("爬取完毕")

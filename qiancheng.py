@@ -2,10 +2,13 @@ from bs4 import BeautifulSoup
 import csv
 import time
 import requests
+from urllib.parse import quote
 
 class Main:
     def index(self,i):
-        link="https://search.51job.com/list/030200,000000,2700,01%252C32%252C38,9,99,%2520,2,"+str(i)+".html?lang=c&stype=&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&providesalary=99&lonlat=0%2C0&radius=-1&ord_field=0&confirmdate=9&fromType=&dibiaoid=0&address=&line=&specialarea=00&from=&welfare="
+        # 岗位
+        work_name="运营总监"
+        link="https://search.51job.com/list/030200,000000,0000,00,9,99,"+quote(work_name)+",2,"+str(i)+".html?lang=c&stype=&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&providesalary=99&lonlat=0%2C0&radius=-1&ord_field=0&confirmdate=9&fromType=&dibiaoid=0&address=&line=&specialarea=00&from=&welfare="
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"}
 
         response = requests.get(link, headers=headers)
