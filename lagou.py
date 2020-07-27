@@ -76,5 +76,5 @@ class Main:
 
 for i in range(0,200):
 	Main().index(i);
-	time.sleep(random.randint(15,60))
+	time.sleep(random.randint(15,40))
 print("写入完成")
