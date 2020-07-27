@@ -24,6 +24,16 @@ class Main:
 
 		head = request.Request(url, headers={
 			'User-Agent': random.choice(user_agent_list),
+			"cookie": "__zp__pub__=; _bl_uid=bOk4b6U6sv0yaehChrgt610q4d9X; lastCity=101280100; Hm_lvt_194df3105ad7148dcf2b98a91b5e727a=1595564075,1595606820,1595606820,1595831896; __c=1595831898; __g=-; __l=l=%2Fwww.zhipin.com%2Fc101280100%2Fd_203%2F%3Fquery%3D%25E6%259E%25B6%25E6%259E%2584%25E5%25B8%2588%26page1%3D%26ka%3Dpage-1&r=&friend_source=0&friend_source=0; t=bhAXzzvVTh5wEw7h; wt=bhAXzzvVTh5wEw7h; Hm_lpvt_194df3105ad7148dcf2b98a91b5e727a=1595835982; __a=14270550.1564480289.1595606823.1595831898.94.10.12.41; __zp_stoken__=7cd5aWDNuRz12bARHZUcuLmgLTQIfTTVHWH4eLytYEFtvZlw7EUYhER0gRxJsEWZ3LUdCQGU1fkICP21nS18HPWUYTBIleAZ%2BLD5UdgsgCj5ZIGN5TA4RbHBKZCgjW0kub34HP2BOXT9Lfh0%3D",
+			"upgrade-insecure-requests": 1,
+			"cache-control": "max-age=0",
+			"accept-language": "zh-CN,zh;q=0.9",
+			"accept-encoding": "gzip, deflate, br",
+			"accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+			"scheme": "https",
+			"path": "/job_detail/?ka=header-job",
+			"method": "GET",
+			"authority": "www.zhipin.com"
 		})
 
 		response = request.urlopen(head)
@@ -36,12 +46,12 @@ class Main:
 		cookie = cookie[:-1]
 		print(cookie)
 		headers = {
-			# 'accept':'application/json, text/javascript, */*; q=0.01',
-			# 'accept-encoding':'gzip, deflate, br',
-			# 'accept-language':'zh-CN,zh;q=0.8',
+			'accept':'application/json, text/javascript, */*; q=0.01',
+			'accept-encoding':'gzip, deflate, br',
+			'accept-language':'zh-CN,zh;q=0.8',
 			"user-agent": random.choice(user_agent_list),
-			# 'x-requested-with':'XMLHttpRequest',
-			# 'cookie':cookie, # 需要填写
+			'x-requested-with':'XMLHttpRequest',
+			'cookie':cookie, # 需要填写
 			}
 
 

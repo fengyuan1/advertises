@@ -10,14 +10,27 @@ import urllib.parse
 import re
 import csv
 import time
+import requests
 from urllib import request
 
 #https://www.zhipin.com/c101130100/d_203/?query=Java&page=1&ka=page-1
-
 class ZhaopinSpyder:
     def __init__(self):
         self.baseurl = "https://www.zhipin.com/c"
-        self.headers = {"user-Agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.835.163 Safari/535.1"}
+        self.headers = {
+            "user-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+            "cookie":"__zp__pub__=; _bl_uid=bOk4b6U6sv0yaehChrgt610q4d9X; lastCity=101280100; Hm_lvt_194df3105ad7148dcf2b98a91b5e727a=1595564075,1595606820,1595606820,1595831896; __c=1595831898; __g=-; __l=l=%2Fwww.zhipin.com%2Fc101280100%2Fd_203%2F%3Fquery%3D%25E6%259E%25B6%25E6%259E%2584%25E5%25B8%2588%26page1%3D%26ka%3Dpage-1&r=&friend_source=0&friend_source=0; t=bhAXzzvVTh5wEw7h; wt=bhAXzzvVTh5wEw7h; __zp_stoken__=7cd5aWDNuRz12KWMibwcLLmgLTQJiI0AoUH4eLytYEFtAZRQ9KkYhER0gFSJ2GSZMLUdCQGU1IjZVZGFnRxEpTA1VHwoiY3loCzY4cQsgCj5ZIFg5RBQhPnBKZCgjYEkub34HP2BOXT9Lfh0%3D; Hm_lpvt_194df3105ad7148dcf2b98a91b5e727a=1595840422; __a=14270550.1564480289.1595606823.1595831898.98.10.16.45",
+            "upgrade-insecure-requests":1,
+            "cache-control":"max-age=0",
+            "accept-language":"zh-CN,zh;q=0.9",
+            "accept-encoding":"gzip, deflate, br",
+            "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+            "scheme":"https",
+            "path":"/job_detail/?ka=header-job",
+            "method":"GET",
+            "authority":"www.zhipin.com"
+
+         }
         self.name = ""
         self.city = ""
         #self.page = 0
@@ -27,20 +40,29 @@ class ZhaopinSpyder:
         head = request.Request(url, headers=self.headers)
         # print(head)
         response = request.urlopen(head)
-        print(response.getheaders())
         cookie = ''
+        # print(response.getheaders())
         for header in response.getheaders():
             if header[0] == 'set-cookie':
                 cookie = cookie + header[1].split(';')[0] + '; '
         # 去掉最后的空格
         cookie = cookie[:-1]
-        print(cookie)
+        # print(cookie)
+        headers = {
+            'accept': 'application/json, text/javascript, */*; q=0.01',
+            'accept-encoding': 'gzip, deflate, br',
+            'accept-language': 'zh-CN,zh;q=0.8',
+            "user-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+            'x-requested-with': 'XMLHttpRequest',
+            'cookie': cookie,  # 需要填写
+        }
 
+        # print(self.headers)
+        req = requests.get(url,headers=headers)
 
-        # req = urllib.request.Request(url,headers=self.headers)
-        # res = urllib.request.urlopen(req)
+        print(req)
         # html = res.read().decode("utf-8")
-        #print(html)
+        # print(html)
         # print(html)
         # self.parsePage(html)
     # 解析页面

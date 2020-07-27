@@ -6,6 +6,7 @@ import csv
 import ssl
 import json
 import time
+import random
 class Main:
 	def index(self,i):
 		# 去掉全局安全校验
@@ -75,5 +76,5 @@ class Main:
 
 for i in range(0,200):
 	Main().index(i);
-	time.sleep(15)
+	time.sleep(random.randint(15,60))
 print("写入完成")
