@@ -9,6 +9,7 @@ import re
 import random
 import time
 import os
+import csv
 
 jobId = 'f5add7fcd540d89e0nZz2Nu9FFY~'
 if (len(sys.argv) > 1) :
@@ -47,6 +48,14 @@ def requestResumeToJobSeeker( uid ):
 def acceptResumeOfJobSeeker( uid ):
     acceptResumeResuslt = requests.get('https://www.zhipin.com/chat/acceptResume.json?to=' + str(uid) + '&mid=' + str(38834193982) + '&aid=41&action=0&extend=&_=' + str(int(round(time.time() * 1000))), headers=headers).json()
     print(acceptResumeResuslt)
+
+#写入csv文件
+def write(self, data):
+    with open('data/candidate' + time.strftime("%Y-%m-%d", time.localtime()) + '.csv', 'a', encoding='utf-8',
+              newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
+        print("写入成功")
 
 # 获取绝对路径
 os.chdir(sys.path[0])
@@ -211,6 +220,7 @@ while loop:
         print('工作经历:' + experience)
         print('毕业学校:' + school)
 
+        write([contactStatus,location,workTime,education,age,workStatus,activeStatus,salary,name,experience,school]);
 
         # if contactStatus == '打招呼':
             #与牛人打招呼

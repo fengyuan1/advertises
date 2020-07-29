@@ -69,7 +69,7 @@ class Main:
 
 
 	def write(self,data):
-		with open('data/lagou_guangdong'+time.strftime("%Y-%m-%d", time.localtime())+'.csv', 'a', encoding='utf-8', newline='') as f:
+		with open('data/lagou_guangdong'+time.strftime("%Y-%m-%d", time.localtime())+'.csv', 'a+', encoding='utf-8', newline='') as f:
 			writer = csv.writer(f)
 			writer.writerow(data)
 			print("写入成功")

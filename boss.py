@@ -88,7 +88,7 @@ class Main:
 		# # print(li[2])
 
 	def write(self,data):
-		with open('data/result.csv', 'a', encoding='utf-8', newline='') as f:
+		with open('data/result.csv', 'a+', encoding='utf-8', newline='') as f:
 			writer = csv.writer(f)
 			writer.writerow(data)
 			print("写入成功")
