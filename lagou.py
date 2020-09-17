@@ -7,6 +7,7 @@ import ssl
 import json
 import time
 import random
+import sys
 class Main:
 	def index(self,i):
 		# 去掉全局安全校验
@@ -35,10 +36,11 @@ class Main:
 			'Cookie': cookie,
 			'Referer': 'https://www.lagou.com/jobs/list_%E6%9E%B6%E6%9E%84%E5%B8%88?city=%E5%B9%BF%E5%B7%9E&labelWords=&fromSearch=true&suginput='
 		}
+		kd='高级程序员';
 		data = {
 			'first': 'true',
 			'pn': i,
-			'kd': '运营总监'
+			'kd': kd
 		}
 
 		req = request.Request(url, data=parse.urlencode(data).encode('utf-8'), headers=headers,method='POST')
@@ -49,6 +51,9 @@ class Main:
 		result=json.loads(result);
 		# print(result['content']['positionResult'])
 
+		if (result['content']['positionResult']['resultSize'] == 0):
+			print("恭喜你,本次爬取数据任务已完成啦")
+			sys.exit();
 # 岗位
 		try:
 			# print(result)
@@ -63,18 +68,19 @@ class Main:
 				data=[work,edu,money,company];
 				print(data)
 				if district=="广州" or district=="深圳":
-					self.write([district,work,edu,money,company,year,create_time])
+					self.write(kd,[district,work,edu,money,company,year,create_time])
 		except IOError:
 			print('chenggong')
 
 
-	def write(self,data):
-		with open('data/lagou_guangdong'+time.strftime("%Y-%m-%d", time.localtime())+'.csv', 'a+', encoding='utf-8', newline='') as f:
+	def write(self,kd,data):
+		with open('data/lagou_guangdong_'+time.strftime("%Y-%m-%d", time.localtime())+'_'+kd+'.csv', 'a+', encoding='utf-8', newline='') as f:
 			writer = csv.writer(f)
 			writer.writerow(data)
 			print("写入成功")
 
 for i in range(0,200):
 	Main().index(i);
+	sys.stdout.flush()
 	time.sleep(random.randint(15,40))
 print("写入完成")
